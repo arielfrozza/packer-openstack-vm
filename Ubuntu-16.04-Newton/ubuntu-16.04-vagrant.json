@@ -1,0 +1,66 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "boot_command": [
+	      "<enter><wait>",
+              "<f6><esc>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+              "<bs><bs><bs>",
+              "/install/vmlinuz ",
+              "initrd=/install/initrd.gz ",
+              "net.ifnames=0 ",
+              "auto-install/enable=true ",
+              "debconf/priority=critical ",
+              "preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg",
+              "<enter>"      
+            ],
+            "boot_wait": "10s",
+            "disk_size": 81920,
+            "guest_os_type": "Ubuntu_64",
+            "headless": false,
+            "http_directory": "http",
+            "iso_urls": [
+                "iso/ubuntu-16.04.3-server-amd64.iso"
+            ],
+            "iso_checksum_type": "sha256",
+            "iso_checksum": "a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_port": 22,
+            "ssh_wait_timeout": "10000s",
+            "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+            "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+            "virtualbox_version_file": ".vbox_version",
+            "vm_name": "packer-ubuntu-16.04",
+            "vboxmanage": [
+            [ "modifyvm", "{{.Name}}", "--memory", "2048"],
+            [ "modifyvm", "{{.Name}}", "--cpus", "2"]
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/init.sh",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+        },
+        {
+            "type": "shell",
+            "script": "scripts/cleanup.sh",
+            "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+        }    
+    ],
+    "post-processors": [{
+      "type": "vagrant",
+      "compression_level": "8",
+      "output": "output-vagrant/packer-ubuntu-16.04.box"
+    }]
+  }
