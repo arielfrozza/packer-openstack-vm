@@ -1,7 +1,5 @@
 #!/bin/bash -eux
 
-apt-get -y install git vim
-
 git clone -b stable/pike https://git.openstack.org/openstack-dev/devstack.git /home/stack/devstack/
 
 echo '[[local|localrc]]' > /home/stack/devstack/local.conf
