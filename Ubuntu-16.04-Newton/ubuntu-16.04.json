@@ -59,7 +59,7 @@
         {
             "type": "shell",
             "script": "scripts/os_install.sh",
-            "execute_command": "echo 'stack' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+            "execute_command": "echo 'stack' | {{.Vars}} sudo -S -u stack -E bash '{{.Path}}'"
         },
         {
             "type": "shell",
