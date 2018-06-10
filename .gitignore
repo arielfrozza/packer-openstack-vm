@@ -3,3 +3,7 @@ Ubuntu-16.04-Newton/packer_cache/
 Ubuntu-16.04-Newton/output-vagrant/*.box
 Ubuntu-16.04-Newton/output-virtualbox-iso/*
 Ubuntu-16.04-Newton/iso/*.iso
+Ubuntu-16.04-Ocata/packer_cache/
+Ubuntu-16.04-Ocata/output-vagrant/*.box
+Ubuntu-16.04-Ocata/output-virtualbox-iso/*
+Ubuntu-16.04-Ocata/iso/*.iso
